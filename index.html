@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Nuestro Espacio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Caveat:wght@400;600&display=swap">
+    <link rel="stylesheet" href="styles.css?v=6">
+</head>
+<body>
+    <!-- Pantalla Splash (Corazón) -->
+    <div id="splash-screen" class="screen active">
+        <div class="splash-container">
+            <h1>Nuestro Espacio</h1>
+            <p class="splash-subtitle">Juntos, siempre juntos</p>
+
+            <div class="heart-container">
+                <div class="heart" id="heart" onclick="handleHeartClick(event)">❤️</div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-label">Cargando Amor</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressPercent">0</span>%
+                </div>
+            </div>
+
+            <p class="hint">Dale click al corazón ✨</p>
+        </div>
+    </div>
+
+    <!-- Pantalla Principal (Álbum) -->
+    <div id="main-screen" class="screen">
+        <!-- Header -->
+        <div class="album-header">
+            <h1>Nuestro Espacio</h1>
+            <div class="header-right">
+                <span id="user-badge" class="user-badge"></span>
+                <button class="btn-logout" onclick="logout()">🚪 Salir</button>
+            </div>
+        </div>
+
+        <!-- Carousel de Momentos -->
+        <div class="album-main">
+            <div id="years-container" class="years-container"></div>
+
+            <div class="carousel-indicator">
+                <span id="moment-counter"></span>
+            </div>
+
+            <div class="carousel-container">
+                <div class="carousel-wrapper">
+                    <div id="momentos-carousel" class="momentos-carousel"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="album-footer">
+            <button class="action-btn" onclick="toggleUploadForm()">➕ Agregar Momento</button>
+        </div>
+
+        <!-- La carta abierta, flotando sobre el álbum -->
+        <div id="carta-modal" class="carta-modal hidden">
+            <div class="carta-modal-fondo" onclick="cerrarCarta()"></div>
+            <button class="carta-modal-x" onclick="cerrarCarta()" aria-label="Cerrar la carta">✕</button>
+            <div class="carta-modal-hoja" id="carta-modal-hoja"></div>
+        </div>
+
+        <!-- Formulario de carga (oculto inicialmente) -->
+        <div id="upload-form-container" class="upload-form-container hidden">
+            <div class="upload-form-backdrop" onclick="toggleUploadForm()"></div>
+            <div class="upload-form-content">
+                <button class="close-upload" onclick="toggleUploadForm()">✕</button>
+                <h2 id="upload-title">Agregar un Nuevo Momento</h2>
+
+                <div class="tipo-tabs">
+                    <button type="button" class="tipo-tab active" data-tipo="foto" onclick="cambiarTipo('foto')">📷 Foto</button>
+                    <button type="button" class="tipo-tab" data-tipo="carta" onclick="cambiarTipo('carta')">✉️ Carta</button>
+                </div>
+
+                <form id="upload-form" onsubmit="subirFoto(event)" novalidate>
+                    <div class="form-group">
+                        <label for="foto" id="foto-label">Fotos</label>
+                        <input type="file" id="foto" name="foto" accept="image/*,.heic,.heif" multiple required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" name="titulo" placeholder="Ej: Nuestro primer viaje" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha-recuerdo" id="fecha-label">Fecha del Recuerdo</label>
+                        <input type="date" id="fecha-recuerdo" name="fecha-recuerdo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion" id="descripcion-label">Recuerdo o Frase</label>
+                        <textarea id="descripcion" name="descripcion" placeholder="Cuéntale a nuestro futuro yo qué sentiste en este momento..." rows="4"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar Momento</button>
+                        <button type="button" class="btn btn-secondary" onclick="toggleUploadForm()">Cancelar</button>
+                    </div>
+
+                    <div id="upload-error" class="error-message"></div>
+                    <div id="upload-success" class="success-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="script.js?v=6"></script>
+</body>
+</html>
